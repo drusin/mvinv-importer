@@ -1,4 +1,6 @@
 # MvInv Importer
+Also see the plugin page on the spigot website: https://www.spigotmc.org/resources/mvinv-importer.85353/
+
 I was migrating my Multiverse Server to a Bungeecord setup and did not find anything that helps with migrating inventories and XP, so I coded a small plugin myself.
 
 ## Overview
