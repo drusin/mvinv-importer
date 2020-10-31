@@ -1,0 +1,16 @@
+name: MvInvImporter
+version: 0.0.1
+main: xyz.rusin.mvinvimporter.MvInvImporter
+api-version: 1.16
+author: loganthemanster
+commands:
+  MvInvImporter:
+    description: Main command
+    aliases: 
+      - invporter
+      - mvinvimporter
+    permission: mvinvimporter.set
+    usage: "Usage: MvInvImporter set [filename.json] [playername]?"
+permissions:
+  mvinvimporter.set:
+    description: Set player state from json
