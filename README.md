@@ -17,5 +17,6 @@ Copy the json files you want to import into the plugin's directory. Use the comm
 
 ## Shortcomings
 * Currently only takes into account survival inventories
+* Ignores location and spawns
 * Ignores potion effects
 * Ignores a few stats like fall distance, fire ticks and flood level
