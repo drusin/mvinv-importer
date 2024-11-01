@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,13 +65,13 @@ public class Commands implements CommandExecutor, TabCompleter {
         try {
             inventory = gson.fromJson(Files.lines(jsonFile.toPath()).collect(Collectors.joining(" ")), Inventory.class);
         } catch (IOException | JsonSyntaxException e) {
-            System.err.println("Cannot read " + args[1]);
+            MvInvImporter.LOGGER.warning("Cannot read " + args[1]);
             return false;
         }
         String playerName = args.length == 2 ? args[1].replace(".json", "") : args[2];
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) {
-            System.err.println(String.format("Player %s is not online!", playerName));
+            MvInvImporter.LOGGER.warning(String.format("Player %s is not online!", playerName));
             return false;
         }
 
@@ -124,15 +125,9 @@ public class Commands implements CommandExecutor, TabCompleter {
             return;
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
+
         for (var entry : meta.enchants.entrySet()) {
-            Enchantment enchantment;
-            // reflection because mvinv uses the field names of the enchantments instead of their keys -.-
-            try {
-                Field f = Enchantment.class.getField(entry.getKey());
-                enchantment = ((Enchantment)f.get(null));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            Enchantment enchantment = Enchantment.getByName(entry.getKey());
             itemMeta.addEnchant(enchantment, entry.getValue(), true);
         }
         itemStack.setItemMeta(itemMeta);
