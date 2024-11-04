@@ -56,5 +56,6 @@ public class Inventory {
         Integer damage;
         @SerializedName("display-name")
         String displayName;
+        String internal;
     }
 }

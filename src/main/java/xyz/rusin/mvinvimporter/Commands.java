@@ -4,9 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -99,6 +97,9 @@ public class Commands implements CommandExecutor, TabCompleter {
     }
 
     private ItemStack fromSlot(Slot slot) {
+        if (slot.type.contains("SHULKER")) {
+            Utils.unpackShulker(slot.meta.internal);
+        }
         ItemStack stack = new ItemStack(Material.valueOf(slot.type));
         stack.setAmount(slot.amount);
         if (slot.meta != null) {
